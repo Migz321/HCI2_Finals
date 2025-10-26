@@ -1,0 +1,216 @@
+<!-- index.html (with logo) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HCI2-FinalProject</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#login" aria-label="Home">
+        <img src="/img/Screenshot 2025-10-26 154608.png" alt="Logo" style="width:40px; height:40px; border-radius:50%;" />
+        <span>Litol Dumplings</span>
+      </a>
+      <nav class="menu" aria-label="Primary">
+        <a href="#profile">Profile</a>
+        <a href="#login">Log in</a>
+        <a class="cta" href="#signup">Sign up</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="login" class="page">
+      <div class="grid">
+        <div class="card" style="max-width:560px; margin-inline:auto">
+          <div class="card-header"><h2>Welcome back</h2><span class="pill">Log in</span></div>
+          <form id="login-form" action="#profile" method="get">
+            <div class="field">
+              <label for="login-email">Email</label>
+              <input id="login-email" type="email" name="email" placeholder="you@gmail.com" required />
+            </div>
+            <div class="field">
+              <label for="login-pass">Password</label>
+              <input id="login-pass" type="password" name="password" placeholder="At least 8 characters" minlength="8" required />
+              <small class="muted">Forgot it? You can reset it later.</small>
+            </div>
+            <label class="remember"><input type="checkbox" /> Keep me signed in on this device</label>
+            <div class="actions">
+              <button class="btn primary" type="submit">Log in</button>
+              <a class="btn ghost" href="#signup">Create a new account</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="signup" class="page">
+      <div class="grid">
+        <div class="card" style="max-width:640px; margin-inline:auto">
+          <div class="card-header"><h2>Create your account</h2><span class="pill">Sign up</span></div>
+          <p class="muted" style="margin-top:-6px">Takes less than a minute—no spam, ever.</p>
+          <form id="signup-form" action="#profile" method="get">
+            <div class="grid" style="grid-template-columns:repeat(2,1fr); gap:14px">
+              <div class="field"><label for="first">First name</label><input id="first" name="first" placeholder="e.g., Miguel" required/></div>
+              <div class="field"><label for="last">Last name</label><input id="last" name="last" placeholder="e.g., Reyes" required/></div>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" name="email" placeholder="you@domain.com" required />
+            </div>
+            <div class="grid" style="grid-template-columns:repeat(2,1fr); gap:14px">
+              <div class="field"><label for="pass">Password</label><input id="pass" type="password" name="password" placeholder="At least 8 characters" minlength="8" required /></div>
+              <div class="field"><label for="pass2">Confirm password</label><input id="pass2" type="password" name="password2" placeholder="Repeat your password" minlength="8" required /></div>
+            </div>
+            <div class="field">
+              <label><input type="checkbox" required /> I agree to the Terms & Privacy Policy</label>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="submit">Create account</button>
+              <a class="btn ghost" href="#login">I already have an account</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="profile" class="page">
+      <div class="grid">
+        <div class="card">
+          <div class="card-header"><h2>Your Profile</h2><span class="pill">Public</span></div>
+          <div class="profile">
+            <div id="avatar" class="avatar" aria-label="Avatar">YN</div>
+            <div>
+              <h3 id="display-name">Your Name</h3>
+              <p id="display-loc">Your Role • Your City</p>
+              <div id="display-tags" class="tags">
+                <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+              </div>
+              <p><a id="display-website" href="#" target="_blank" rel="noopener">yourwebsite.com</a></p>
+              <p id="display-bio" class="muted">Tell people what you like building.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3>Edit Profile</h3><span class="pill">Form</span></div>
+          <form id="profile-form">
+            <div class="grid" style="grid-template-columns:repeat(2,1fr); gap:14px">
+              <div class="field"><label for="pname">Display name</label><input id="pname" name="display_name" placeholder="e.g., Miguel Reyes"/></div>
+              <div class="field"><label for="ploc">Location</label><input id="ploc" name="location" placeholder="e.g., Student • Manila, PH"/></div>
+            </div>
+            <div class="field"><label for="purl">Website</label><input id="purl" name="website" placeholder="https://yourdomain.com"/></div>
+            <div class="field"><label for="pbio">Bio</label><textarea id="pbio" name="bio" rows="4" placeholder="Short intro about you..."></textarea></div>
+            <div class="field"><label for="pskills">Skills / Tags (comma-separated)</label><input id="pskills" name="skills" placeholder="HTML, CSS, JavaScript, React"/></div>
+            <div class="actions"><button class="btn primary" type="submit">Save changes</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      const $ = (sel, root=document) => root.querySelector(sel);
+      const storageKey = 'devspace_profile_v1';
+      const form = $('#profile-form');
+
+      const els = {
+        name: $('#display-name'),
+        loc: $('#display-loc'),
+        tags: $('#display-tags'),
+        website: $('#display-website'),
+        bio: $('#display-bio'),
+        avatar: $('#avatar')
+      };
+
+      function initialsFrom(name){
+        if(!name) return 'YN';
+        return name.trim().split(/\s+/).slice(0,2).map(w=>w[0].toUpperCase()).join('');
+      }
+
+      function renderTags(list){
+        els.tags.innerHTML = '';
+        (list||[]).filter(Boolean).forEach(t=>{
+          const span = document.createElement('span');
+          span.className = 'tag';
+          span.textContent = t.trim();
+          els.tags.appendChild(span);
+        });
+        if(!els.tags.children.length){ els.tags.innerHTML = '<span class="tag">Add skills</span>'; }
+      }
+
+      function applyProfile(p){
+        if(!p) return;
+        els.name.textContent = p.name || 'Your Name';
+        els.loc.textContent = p.location || 'Your Role • Your City';
+        els.bio.textContent = p.bio || 'Tell people what you like building.';
+        els.avatar.textContent = initialsFrom(p.name||'');
+        if(p.website){
+          els.website.href = p.website;
+          try { els.website.textContent = new URL(p.website).host; } catch(e){ els.website.textContent = p.website; }
+        } else {
+          els.website.removeAttribute('href');
+          els.website.textContent = 'yourwebsite.com';
+        }
+        renderTags(p.skills || []);
+      }
+
+      function loadProfile(){
+        try{ return JSON.parse(localStorage.getItem(storageKey)||'null'); }catch(e){ return null; }
+      }
+
+      function saveProfile(p){
+        try{ localStorage.setItem(storageKey, JSON.stringify(p)); }catch(e){}
+      }
+
+      applyProfile(loadProfile());
+
+      if(form){
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          const data = {
+            name: $('#pname').value.trim(),
+            location: $('#ploc').value.trim(),
+            website: $('#purl').value.trim(),
+            bio: $('#pbio').value.trim(),
+            skills: $('#pskills').value.split(',').map(s=>s.trim()).filter(Boolean)
+          };
+          applyProfile(data);
+          saveProfile(data);
+          location.hash = '#profile';
+        });
+      }
+
+      const signupForm = $('#signup-form');
+      if(signupForm){
+        signupForm.addEventListener('submit', function(e){
+          const first = $('#first').value.trim();
+          const last = $('#last').value.trim();
+          const email = $('#email').value.trim();
+          const fullName = `${first} ${last}`.trim();
+          const profileData = {
+            name: fullName,
+            email: email,
+            location: '',
+            website: '',
+            bio: '',
+            skills: []
+          };
+          saveProfile(profileData);
+        });
+      }
+
+      try { $('#y').textContent = new Date().getFullYear(); } catch(e){}
+    })();
+  </script>
+</body>
+</html>
